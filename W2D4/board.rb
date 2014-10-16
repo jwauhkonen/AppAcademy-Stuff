@@ -7,8 +7,8 @@ class Board
     @grid = Array.new(8) { Array.new(8) }
   end
   
-  def place_piece(color, pos)
-    self[pos] = Piece.new(color, pos, self)
+  def place_piece(color, pos, is_king)
+    self[pos] = Piece.new(color, pos, is_king, self)
   end
   
   def [](pos)
@@ -25,15 +25,24 @@ class Board
     @grid.flatten.reject { |square| square.nil? }
   end
   
+  def new_dup
+    new_board = Board.new
+    all_pieces.each do |piece|
+      new_board.place_piece(piece.color, piece.pos, piece.is_king)
+    end
+    
+    new_board
+  end
+  
   def display
     @grid.each_with_index do |row, i|
       print "#{8 - i} "
       row.each_index do |j|
         pos = [i, j]
         if (i + j).odd?
-          print square(pos).on_light_black
+          print tile_display(pos).on_light_black
         else
-          print square(pos).on_white
+          print tile_display(pos).on_white
         end
       end
       print "\n"
@@ -43,7 +52,7 @@ class Board
     
   end
   
-  def square(pos)
+  def tile_display(pos)
     if self[pos].nil?
       "   "
     else
@@ -51,17 +60,13 @@ class Board
     end
   end
   
-
-  
-  
-  
 end
 
 bd = Board.new
-bd.place_piece(:red, [6, 5])
-bd.place_piece(:red, [4, 3])
-bd.place_piece(:black, [6, 1])
-bd[[6, 1]].is_king = true
+bd.place_piece(:red, [6, 5], false)
+bd.place_piece(:red, [4, 3], false)
+bd.place_piece(:red, [2, 5], false)
+bd.place_piece(:black, [6, 1], true)
 p bd[[6, 5]].moves
 p bd[[4, 3]].moves
 p bd[[6, 1]].moves
@@ -71,9 +76,14 @@ bd[[6, 1]].perform_slide([5, 2])
 p bd[[5, 2]].moves
 bd.display
 
-bd[[5, 2]].perform_jump([3, 4])
-p bd[[3, 4]].moves
+# p bd[[5,2]].valid_move_seq?([3, 4], [1, 6])
+# p bd[[5,2]].valid_move_seq?([3, 4], [1, 7])
+# p bd[[5,2]].valid_move_seq?([3, 4])
 
+
+
+bd[[5, 2]].perform_moves([3, 4], [1, 6])
+p bd[[1, 6]].moves
 bd.display
 
 bd[[6, 5]].perform_slide([7, 4])
