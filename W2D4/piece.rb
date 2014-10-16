@@ -1,0 +1,83 @@
+class Piece
+  
+  UP_MOVES = [[-1, -1], [-1, 1]]
+  DOWN_MOVES = [[1, -1], [1, 1]]
+  
+  attr_accessor :color, :pos, :is_king
+  
+  def initialize(color, pos, board)
+    @color = color
+    @pos = pos
+    @is_king = false
+    @board = board
+  end
+  
+  def symbol
+    @is_king ? "@".colorize(color) : "o".colorize(color)
+  end
+  
+  def moves
+    moves = []
+    
+    move_diffs.each do |diff|
+      slide = [pos[0] + diff[0], pos[1] + diff[1]]
+      moves << slide if in_bounds?(slide) && @board[slide].nil? 
+      
+      jump = [pos[0] + (diff[0] * 2), pos[1] + (diff[1] * 2)]
+      if in_bounds?(jump) && !@board[between(jump)].nil?
+        moves << jump unless @board[between(jump)].color == self.color
+      end
+    end
+    
+    moves
+  end
+  
+  def perform_slide(new_pos)
+    if moves.include?(new_pos)
+      @board[@pos] = nil
+      @pos = new_pos
+      @board[@pos] = self
+      maybe_promote
+    end
+    
+  end
+  
+  def perform_jump(new_pos)
+    if moves.include?(new_pos)
+      @board[@pos] = nil
+      @board[between(new_pos)] = nil
+      @pos = new_pos
+      @board[@pos] = self
+      maybe_promote
+    end
+    
+  end
+  
+  
+  private
+  
+  
+  def in_bounds?(pos)
+    pos.all? { |i| i >= 0 && i < 8 }
+  end
+  
+  def maybe_promote
+    @is_king = true if @color == :red && @pos[0] == 7
+    @is_king = true if @color == :black && @pos[0] == 0
+  end
+  
+  def between(new_pos)
+    [(@pos[0] + new_pos[0]) / 2, (@pos[1] + new_pos[1]) / 2]
+  end
+  
+  def move_diffs
+    if @is_king
+      UP_MOVES + DOWN_MOVES
+    elsif @color == :red
+      DOWN_MOVES
+    else
+      UP_MOVES
+    end
+  end
+  
+end
