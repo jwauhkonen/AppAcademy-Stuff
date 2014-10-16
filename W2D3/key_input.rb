@@ -30,7 +30,11 @@ class KeyInput
     #@board.display(@highlight)
 
     c = read_char
-    until c == "\r" || c == "q"
+    if c == "q"
+      exit
+    end
+    
+    until c == " "
       c = read_char
       case c
       when "\e[A"
@@ -46,10 +50,11 @@ class KeyInput
         # puts "LEFT ARROW"
         @highlight[1] -= 1
       end
-      @board.display(@highlight)
+      @board.highlight = [highlight[0], highlight[1]]
+      @board.display
     end
 
-    [@highlight[0], @highlight[1]]
+    [highlight[0], highlight[1]]
   end
 
 end

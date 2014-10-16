@@ -8,11 +8,18 @@ class Game
 
   class InputError < StandardError ;end
   
+  attr_reader :input_type
+  
 
-  def initialize
+  def initialize(input_type)
+    @input_type = input_type
     @board = Board.new
     @current_color = :blue
-    # @key_input = KeyInput.new(@board)
+    @key_input = KeyInput.new(@board)
+  end
+  
+  def start_game
+    input_type == :dir ? play_dir : play
   end
 
   def play
@@ -26,6 +33,18 @@ class Game
     puts (@board.checkmate?(:blue) ? "Red wins!".colorize(:red) : "Blue wins!".colorize(:blue) )
   end
   
+  def play_dir
+    @board.highlight = [[4, 4]]
+    @board.display
+    until @board.checkmate?(:blue) || @board.checkmate?(:red)
+      take_turn_dir
+      change_current_color
+    end
+    
+    @board.display
+    puts (@board.checkmate?(:blue) ? "Red wins!".colorize(:red) : "Blue wins!".colorize(:blue) )
+  end
+  
 
   private
 
@@ -33,6 +52,7 @@ class Game
     begin
       start_pos, end_pos = get_move
       @board.move(start_pos, end_pos, @current_color)
+      @board.display
     rescue InputError => input_error
       puts input_error
       retry
@@ -40,6 +60,25 @@ class Game
       puts move_error
       retry
     end
+  end
+  
+  def take_turn_dir
+    begin
+      puts "\nTurn: #{@current_color}\tIn check? : #{@board.check?(@current_color)}"
+      puts "Select piece to move"
+      start_pos = @key_input.move_keys
+      puts "Select space to move to"
+      end_pos = @key_input.move_keys
+      @board.move(start_pos, end_pos, @current_color)
+      @board.display
+    rescue InputError => input_error
+      puts input_error
+      retry
+    rescue MoveError => move_error
+      puts move_error
+      retry
+    end
+
   end
 
   def get_move
@@ -75,8 +114,8 @@ class Game
   end
 end
 
-game = Game.new
-game.play
+game = Game.new(:dir)
+game.start_game
 
 
 

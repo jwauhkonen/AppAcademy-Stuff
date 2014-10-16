@@ -4,10 +4,11 @@ class Board
 
   POS_TRANSLATOR = {0 => "A", 1 => "B", 2 => "C", 3 => "D", 4 => "E", 5 => "F", 6 => "G", 7 => "H"}
 
-  attr_accessor :grid 
+  attr_accessor :grid, :highlight 
 
   def initialize(pop_board = true)
     @grid = Array.new(8) {Array.new(8)}
+    @highlight = nil
     
     start_pieces if pop_board
   end
@@ -60,20 +61,21 @@ class Board
   end
 
   def display
+    system('clear')
     @grid.each_with_index do |array, row|
       print "\n#{(7 - row + 1)} " #print row number
       array.each_index do |col|
-        print background(row, col, 
+        print background(row, col,
         if empty_space?([row, col])
-          "  "
+          "   "
         else
-          "#{self[[row, col]].display_piece} "
+          " #{self[[row, col]].display_piece} "
         end
         )
       end
     end
     #print column letter markers
-    puts "\n  A B C D E F G H \n"
+    puts "\n   A  B  C  D  E  F  G  H \n"
     
   end
 
@@ -90,7 +92,9 @@ class Board
   private
 
   def background(row, col, str)
-    if (row + col).odd?
+    if [row, col] == @highlight.flatten
+      str.on_light_cyan
+    elsif (row + col).odd?
       str.on_light_black
     else
       str
