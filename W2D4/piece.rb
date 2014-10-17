@@ -18,16 +18,20 @@ class Piece
     @is_king ? "@".colorize(color) : "o".colorize(color)
   end
   
-  def perform_moves(*moves)
-    if valid_move_seq?(*moves)
-      perform_moves!(*moves)
+  def perform_moves(moves, current_turn)
+    unless @color == current_turn
+      raise InvalidMoveError.new("Not your turn!")
+    end
+    
+    if valid_move_seq?(moves)
+      perform_moves!(moves)
     end
   end
   
-  def valid_move_seq?(*moves)
+  def valid_move_seq?(moves)
     begin
       new_board = @board.new_dup
-      @board.new_dup[@pos].perform_moves!(*moves)
+      new_board[@pos].perform_moves!(moves)
     rescue InvalidMoveError => move_error
       puts move_error
       return false
@@ -41,36 +45,38 @@ class Piece
   end
   
   def slide_moves
-    slide_moves = []
+    slide_moves_arr = []
     
     move_diffs.each do |diff|
-      slide = [pos[0] + diff[0], pos[1] + diff[1]]
-      slide_moves << slide if in_bounds?(slide) && @board[slide].nil? 
+      slide = [@pos[0] + diff[0], @pos[1] + diff[1]]
+      slide_moves_arr << slide if in_bounds?(slide) && @board[slide].nil? 
     end
     
-    slide_moves
+    slide_moves_arr
   end
   
   def jump_moves
-    jump_moves = []
+    jump_moves_arr = []
     
     move_diffs.each do |diff|
-      jump = [pos[0] + (diff[0] * 2), pos[1] + (diff[1] * 2)]
-      if in_bounds?(jump) && !@board[between(jump)].nil?
-        jump_moves << jump unless @board[between(jump)].color == self.color
-      end
+      jump = [@pos[0] + (diff[0] * 2), @pos[1] + (diff[1] * 2)]
+      # debugger
+      
+      jump_moves_arr << jump if in_bounds?(jump) && @board[jump].nil? && 
+            @board[between(jump)] && @board[between(jump)].color != self.color
     end
-    
-    jump_moves
+    jump_moves_arr
   end
   
-  def perform_moves!(*moves)
+  def perform_moves!(moves)
     
     if moves.length == 1
-      slide_moves.include?(moves[0]) ? perform_slide(moves[0]) : perform_jump(moves[0])
+      raise InvalidMoveError.new('Bad move!') unless 
+            perform_slide(moves.first) || perform_jump(moves.first)
     else
       moves.each do |new_pos|
-        perform_jump(new_pos)
+        raise InvalidMoveError.new('Your sequence is bad!') unless 
+              perform_jump(new_pos)
       end
     end
         

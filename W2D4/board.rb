@@ -3,8 +3,24 @@ require_relative 'piece'
 
 class Board
   
-  def initialize
+  def initialize(setup = true)
     @grid = Array.new(8) { Array.new(8) }
+    populate_board if setup
+  end
+  
+  def populate_board
+    (0..2).each do |i|
+      (0..7).each do |j|
+        place_piece(:red, [i, j], false) if (i + j).odd?
+      end
+    end
+    
+    (5..7).each do |i|
+      (0..7).each do |j|
+        place_piece(:black, [i, j], false) if (i + j).odd?
+      end
+    end
+    
   end
   
   def place_piece(color, pos, is_king)
@@ -22,11 +38,11 @@ class Board
   end
   
   def all_pieces
-    @grid.flatten.reject { |square| square.nil? }
+    @grid.flatten.compact
   end
   
   def new_dup
-    new_board = Board.new
+    new_board = Board.new(false)
     all_pieces.each do |piece|
       new_board.place_piece(piece.color, piece.pos, piece.is_king)
     end
@@ -61,31 +77,31 @@ class Board
   end
   
 end
-
-bd = Board.new
-bd.place_piece(:red, [6, 5], false)
-bd.place_piece(:red, [4, 3], false)
-bd.place_piece(:red, [2, 5], false)
-bd.place_piece(:black, [6, 1], true)
-p bd[[6, 5]].moves
-p bd[[4, 3]].moves
-p bd[[6, 1]].moves
-bd.display
-
-bd[[6, 1]].perform_slide([5, 2])
-p bd[[5, 2]].moves
-bd.display
-
+#
+# bd = Board.new
+# bd.place_piece(:red, [6, 5], false)
+# bd.place_piece(:red, [4, 3], false)
+# bd.place_piece(:red, [2, 5], false)
+# bd.place_piece(:black, [6, 1], true)
+# p bd[[6, 5]].moves
+# p bd[[4, 3]].moves
+# p bd[[6, 1]].moves
+# bd.display
+#
+# bd[[6, 1]].perform_slide([5, 2])
+# p bd[[5, 2]].moves
+# bd.display
+#
 # p bd[[5,2]].valid_move_seq?([3, 4], [1, 6])
 # p bd[[5,2]].valid_move_seq?([3, 4], [1, 7])
 # p bd[[5,2]].valid_move_seq?([3, 4])
-
-
-
-bd[[5, 2]].perform_moves([3, 4], [1, 6])
-p bd[[1, 6]].moves
-bd.display
-
-bd[[6, 5]].perform_slide([7, 4])
-p bd[[7, 4]].moves
-bd.display
+#
+#
+#
+# bd[[5, 2]].perform_moves([3, 4], [1, 6])
+# p bd[[1, 6]].moves
+# bd.display
+#
+# bd[[6, 5]].perform_slide([7, 4])
+# p bd[[7, 4]].moves
+# bd.display
