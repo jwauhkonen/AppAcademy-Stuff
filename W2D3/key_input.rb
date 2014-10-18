@@ -25,9 +25,14 @@ class KeyInput
    
     return input
   end
+  
+  def in_bounds?(new_pos)
+    row, col = new_pos
+
+    (0..7).cover?(row) && (0..7).cover?(col)
+  end
 
   def move_keys
-    #@board.display(@highlight)
 
     c = read_char
     if c == "q"
@@ -38,17 +43,25 @@ class KeyInput
       c = read_char
       case c
       when "\e[A"
-        # puts "UP ARROW"
-        @highlight[0] -= 1
+        # "UP ARROW"
+        new_pos = [@highlight[0] - 1, @highlight[1]]
+        @highlight = new_pos if in_bounds?(new_pos)
+        # @highlight[0] -= 1
       when "\e[B"
-        # puts "DOWN ARROW"
-        @highlight[0] += 1
+        # "DOWN ARROW"
+        new_pos = [@highlight[0] + 1, @highlight[1]]
+        @highlight = new_pos if in_bounds?(new_pos)
+        # @highlight[0] += 1
       when "\e[C"
-        # puts "RIGHT ARROW"
-        @highlight[1] += 1
+        # "RIGHT ARROW"
+        new_pos = [@highlight[0], @highlight[1] + 1]
+        @highlight = new_pos if in_bounds?(new_pos)
+        # @highlight[1] += 1
       when "\e[D"
-        # puts "LEFT ARROW"
-        @highlight[1] -= 1
+        # "LEFT ARROW"
+        new_pos = [@highlight[0], @highlight[1] - 1]
+        @highlight = new_pos if in_bounds?(new_pos)
+        # @highlight[1] -= 1
       end
       @board.highlight = [highlight[0], highlight[1]]
       @board.display

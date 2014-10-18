@@ -97,7 +97,7 @@ class Board
     elsif (row + col).odd?
       str.on_light_black
     else
-      str
+      str.on_white
     end
   end
 
