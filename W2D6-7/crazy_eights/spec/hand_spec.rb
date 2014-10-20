@@ -16,7 +16,7 @@ describe Hand do
       ]
       
       deck = double("deck")
-      deck.should_receive(:take).with(8).and_return(deck_cards)
+      expect(deck).to receive(:take).with(8).and_return(deck_cards)
       
       hand = Hand.deal_from(deck)
       
@@ -24,9 +24,27 @@ describe Hand do
     end
   end
   
-  
-  
-  
-  
-  
+  describe "play_card" do
+    let(:deck) { double("deck") }
+    let(:hand) do
+      Hand.new([Card.new(:spades, :deuce), Card.new(:spades, :three)])
+    end
+    
+    it "places a card on the discard pile" do
+      expect(deck).to receive(:discard).with(Card.new(:spades, :deuce))
+      
+      hand.play_card(deck, [Card.new(:spades, :deuce)])
+    end
+    
+    it "removes the card from the hand" do
+      let(:hand) do
+        Hand.new([Card.new(:spades, :deuce), Card.new(:spades, :three)])
+      end
+      
+      expect(hand).to eq([Card.new(:spades, :three)])
+      
+      hand.play_card(deck, [Card.new(:spades, :deuce)])
+    end
+  end
+      
 end

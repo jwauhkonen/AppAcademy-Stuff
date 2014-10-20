@@ -30,14 +30,14 @@ class Deck
   def discard(card)
     
     if discard_pile.empty? || card.value == :eight
-      @discard_pile << card
+      @discard_pile += card
     else
       top_card = @discard_pile[-1]
       
       if top_card.suit != card.suit && top_card.value != card.value
         raise "can't play that card" 
       else
-        @discard_pile << card
+        @discard_pile += card
       end
     end
   end

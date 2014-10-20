@@ -12,6 +12,11 @@ class Hand
   end
   
   
+  def play_card(deck, card)
+    deck.discard(card)
+    @cards.delete(card)
+  end
+  
   
   
   
