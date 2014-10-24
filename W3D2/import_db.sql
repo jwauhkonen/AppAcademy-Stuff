@@ -57,7 +57,9 @@ INSERT INTO
 VALUES
   ('Lunch', 'What is your favorite lunch meat?', 1),
   ('Movies', 'What is your favorite movie?', 2),
-  ('Roads', 'How many roads must a man walk down?', 5);
+  ('Roads', 'How many roads must a man walk down?', 5),
+  ('Stuck', 'Oh, mama, is this really the end?', 5),
+  ('Stone', 'How does it feel, to be on your own?', 5);
   
 INSERT INTO
   replies (body, question_id, parent_id, user_id)
@@ -95,4 +97,7 @@ VALUES
   (2, 4),
   (2, 5),
   (1, 1),
-  (1, 3);
+  (1, 3),
+  (4, 1),
+  (4, 3),
+  (5, 2);

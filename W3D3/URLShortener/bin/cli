@@ -1,0 +1,94 @@
+def run
+  display_question
+  email = get_user_email
+  user = find_user(email)
+  present_options
+  choice = get_choice
+  p user.id
+  
+  case choice
+  when 0
+    short_url = create_url(user)    
+  when 1
+    short_url = get_short_url
+    query_tag(short_url)    
+  end
+  
+  visit_url(user, short_url)
+    
+end
+
+
+def query_tag(short_url)
+  puts "Do you want to tag this url? (0/1)"
+  input = get_choice
+  if input == 0
+    topic_id = get_tag_choice
+    tag(topic_id, short_url)
+  end
+end
+
+def get_tag_choice
+  display_tags
+  gets.chomp
+end
+
+def display_tags
+  topic_array = TagTopic.all
+  puts "The available topics are:"
+  topic_array.each do |topic|
+    puts "#{topic[:id]}: #{topic[:topic]}"
+  end
+  puts "Please select a number"
+end
+
+def tag(topic_id, short_url)
+  Tagging.create_tag!(topic_id, short_url)
+end
+
+def display_question
+  puts "Input your email:"
+end
+
+def get_user_email
+  gets.chomp #can insert validations later
+end
+
+def find_user(email)
+  User.find_by(email: email)
+end
+
+def present_options
+  puts "What do you want to do?"
+  puts "0. Create shortened URL\n1. Visit shortened URL"
+end
+
+def get_choice
+  begin
+    input = gets.chomp.to_i
+  end until [0,1].include?(input)
+  input
+end
+
+def create_url(user)
+  puts "Type in your long url"
+  long_url = gets.chomp
+  short_url_obj = ShortenedUrl.create_for_user_and_long_url!(user, long_url)
+  short_url = short_url_obj.short_url
+  puts "Short url is: #{short_url}"
+  short_url
+end
+
+def get_short_url
+  puts "Type in shortened URL"
+  gets.chomp
+end
+
+def visit_url(user, short_url)
+  short_url_obj = ShortenedUrl.find_by(short_url: short_url)
+  Visit.record_visit!(user, short_url_obj)
+  long_url = short_url_obj.long_url
+  Launchy.open(long_url)
+end
+
+run

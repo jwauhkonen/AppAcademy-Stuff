@@ -21,7 +21,32 @@ class User
     @id = options['id']
     @fname = options['fname']
     @lname = options['lname']
+	
   end
+  
+  def save
+    if @id
+      QuestionsDatabase.execute(<<-SQL, attrs.merge({ id: id }))
+        UPDATE
+          users
+        SET
+          fname = :fname, lname = :lname
+        WHERE
+          users.id = :id
+      SQL
+    else
+      QuestionsDatabase.execute(<<-SQL, attrs)
+        INSERT INTO
+          users (fname, lname)
+        VALUES
+          (:fname, :lname)
+      SQL
+      
+      @id = QuestionsDatabase.last_insert_row_id
+    end
+    self
+  end
+      
   
   def authored_questions
     Question.find_by_author(@id)
@@ -34,4 +59,30 @@ class User
   def followed_questions
     QuestionFollow.followed_questions_for_user_id(@id)
   end
+  
+  def liked_questions
+    QuestionLike.liked_questions_for_user_id(@id)
+  end
+  
+  def average_karma
+    
+    average = QuestionsDatabase.instance.execute(<<-SQL, @id)
+    SELECT 
+      COUNT(DISTINCT(q.id)), COUNT(l.id)
+    FROM
+      questions q
+    LEFT OUTER JOIN
+      question_likes l
+    WHERE
+      q.user_id = ?
+    AND
+      l.id IS NOT NULL
+    GROUP BY 
+      q.id;
+    SQL
+    
+    average
+    
+  end
+  
 end
