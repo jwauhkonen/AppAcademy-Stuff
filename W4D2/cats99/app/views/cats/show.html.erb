@@ -1,0 +1,37 @@
+<h1><%= @cat.name %></h1>
+
+<!-- <ul>
+  <% @cat.attributes.each do |key, val| %>
+    <%unless ["id", "created_at","updated_at"].include?(key)%>
+      <li><%="#{key}: #{val}"%></li><br>
+    <% end %>
+  <% end %>
+</ul>
+   -->
+  
+<table>
+  <th><font color = <%=@cat.color%>> The Cat's Stats</font></th>
+  
+  <tr>
+    <td>Birthday</td>
+    <td><%=@cat.birth_date%></td>
+  </tr>
+  
+  <tr>
+    <td>Color</td>
+    <td><%=@cat.color%></td>
+  </tr>
+  
+  <tr>
+    <td>Sex</td>
+    <td><%=@cat.sex%></td>
+  </tr>
+  
+  <tr>
+    <td>Description</td>
+    <td><%=@cat.description%></td>
+  </tr>
+  
+
+  
+</table>
