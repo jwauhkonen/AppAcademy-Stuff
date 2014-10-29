@@ -1,13 +1,5 @@
 <h1><%= @cat.name %></h1>
 
-<!-- <ul>
-  <% @cat.attributes.each do |key, val| %>
-    <%unless ["id", "created_at","updated_at"].include?(key)%>
-      <li><%="#{key}: #{val}"%></li><br>
-    <% end %>
-  <% end %>
-</ul>
-   -->
   
 <table>
   <th><font color = <%=@cat.color%>> The Cat's Stats</font></th>
@@ -31,7 +23,12 @@
     <td>Description</td>
     <td><%=@cat.description%></td>
   </tr>
-  
-
-  
 </table>
+
+<br>
+
+<%= link_to "Edit Cat", edit_cat_url(@cat.id) %>
+
+<br><br>
+
+<%= link_to "All Cats", cats_url %>

@@ -2,7 +2,7 @@ class CatRentalRequest < ActiveRecord::Base
   validates :cat_id, :start_date, :end_date, :status, presence: true
   validates :status, inclusion: { in: ["PENDING", "APPROVED", "DENIED"]}
   after_initialize :status_pending
-  validate approved_cat_requests_cannot_overlap
+  validate :approved_cat_requests_cannot_overlap
   
   belongs_to :cat
   
