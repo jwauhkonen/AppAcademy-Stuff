@@ -10,7 +10,8 @@ class CatRentalRequestsController < ApplicationController
     @cat_rental_request = CatRentalRequest.new(rental_params)
     
     if @cat_rental_request.save
-      redirect_to cats_url
+      flash[:messages] = "LUCKY YOU! You have successfully rented this cat!"
+      redirect_to cat_url(Cat.find(@cat_rental_request.cat_id))
     else
       render :new
     end

@@ -2,6 +2,12 @@
 <% url = @cat.persisted? ? cat_url(@cat) : cats_url %>
 
 <form action="<%=url%>" method="post">
+  
+  <input
+       name="authenticity_token"
+       type="hidden"
+       value="<%= form_authenticity_token %>">
+       
   <input type="hidden" name="_method" value="<%= form_request %>">
   
   <label for="cat_name">Cat name</label>

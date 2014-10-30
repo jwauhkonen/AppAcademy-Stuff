@@ -1,5 +1,9 @@
 <h1><%= @cat.name %></h1>
 
+<input
+     name="authenticity_token"
+     type="hidden"
+     value="<%= form_authenticity_token %>">
   
 <table>
   <th><font color = <%=@cat.color%>> The Cat's Stats</font></th>
@@ -23,8 +27,21 @@
     <td>Description</td>
     <td><%=@cat.description%></td>
   </tr>
+  
+  <tr>
+    <td>Owner</td>
+    <td><%= User.find(@cat.user_id).user_name %></td>
+  </tr>
 </table>
 
+<br><br>
+<h3>Scheduled Rentals</h3>
+<ul>
+  <% this_cats_schedule = CatRentalRequest.where("cat_id = #{@cat.id}") %>
+  <% this_cats_schedule.all do |crr| %>
+      <li><%= crr.start_date %> to <%= crr.end_date %></li>
+  <% end %>
+</ul>
 <br>
 
 <%= link_to "Edit Cat", edit_cat_url(@cat.id) %>

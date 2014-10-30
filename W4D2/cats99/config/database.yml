@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: cats99_development
   pool: 5
-  username: jwauhkonen
+  username: appacademy
   # password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -48,7 +48,7 @@ test:
   encoding: unicode
   database: cats99_test
   pool: 5
-  username: jwauhkonen
+  username: appacademy
   # password:
 #
 # production:

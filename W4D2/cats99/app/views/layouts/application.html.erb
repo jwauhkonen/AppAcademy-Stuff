@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html>
+<%= flash[:errors] %>
+<%= flash[:messages] %>
+<br><br>
+
+<% if session[:token] %>
+  Logged in as: <%= current_user.user_name %>
+  <br>
+  <%= button_to "Logout", session_url, method: :delete %>
+<% else %>
+  <%= link_to "Log in", new_session_url %>
+<% end %>
+
 <head>
   <title>Cats99</title>
   <!-- <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>

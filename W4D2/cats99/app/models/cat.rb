@@ -5,8 +5,17 @@ class Cat < ActiveRecord::Base
   validate :birthdate_is_valid
   validates :sex, inclusion: { in: ['M', 'F'] }
   validates :color, inclusion: { in: COLORS }
+  validates :user_id, presence: true
   
   has_many :cat_rental_requests, dependent: :destroy
+  belongs_to( 
+      :owner,
+      class_name: 'User',
+      foreign_key: :user_id,
+      primary_key: :id
+      )
+      
+  
   
   def age
     today = Date.today
