@@ -1,20 +1,7 @@
 <h1>New Album</h1>
 
 <form action="<%= albums_url %>", method="post">
-	<input type="hidden"
-	       name="authenticity_token"
-		   value="<%= form_authenticity_token %>">
-		   
-   <input type="hidden"
-          name="album[band_id]"
-		  value="<%= @album.band_id %>">
-		   
-	<label for="album_title">Title</label>
-		<input name="album[title]", id="album_title", value="<%= @album.title %>"><br>
-		
-	<label for="album_category">Category</label>
-		<input name="album[category]", id="album_category", value="<% @album.category %>">
-		
-	<input type="submit" value="Submit!">
+	
+	<%= render "form" %>
 	
 </form>

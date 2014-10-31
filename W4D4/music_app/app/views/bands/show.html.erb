@@ -9,6 +9,6 @@
 	<% end %>
 </ol>
 
-<%= link_to "New Album", new_band_album_url(@band) %>
-<%= link_to "Edit Band Info", edit_band_url(@band) %>
+<%= link_to "New Album", new_band_album_url(@band) %><br>
+<%= link_to "Edit Band Info", edit_band_url(@band) %><br>
 <%= button_to "Delete Band", band_url(@band), method: :delete %>
