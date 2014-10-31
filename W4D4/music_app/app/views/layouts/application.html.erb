@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-<%= flash[:errors] %><br>
-<% if session[:token] %>
-	<%= button_to "Logout", session_url, method: :delete %>
-<% end %>
 
 <head>
   <title>MusicApp</title>
@@ -12,8 +8,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<%= flash[:error] %><br>
+	<% if session[:token] %>
+		<%= button_to "Logout", session_url, method: :delete %>
+	<% else %>
+		<%= link_to "Sign In", new_session_url, method: :get %>
+	<% end %>
 
 <%= yield %>
 
 </body>
+<br>
+<% if session[:token] %>
+	<%= link_to "All Bands", bands_url %>
+<% end %>
 </html>

@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     
     if @user
       login_user!(@user)
-      redirect_to new_user_url
+      redirect_to bands_url
     else
       flash.now[:errors] = "Bad email/password combination"
       @user = User.new(email: params[:user][:email])
