@@ -9,4 +9,9 @@ var reader = readline.createInterface({
 
 var game = new TTT.Game(reader);
 
-game.board.display();
+// game.board.display();
+
+game.run( function() {
+	console.log(game.board.winner + " wins!");
+	reader.close();
+});
