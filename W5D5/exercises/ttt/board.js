@@ -43,6 +43,19 @@ Board.prototype.won = function () {
   return win;
 };
 
+Board.prototype.gameOver = function () {
+	var full = true;
+	
+	for (var row = 0; row < 3; row++) {
+		for (var col = 0; col < 3; col++) {
+			if (this.grid[row][col] === null) {
+				full = false;
+			}
+		}
+	}
+	return full;
+}
+
 Board.prototype.display = function () {
 	grid = this.grid;
 	for (var row = 0; row < grid.length; row++) {

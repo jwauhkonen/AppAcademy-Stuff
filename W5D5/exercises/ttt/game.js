@@ -12,21 +12,19 @@ Game.prototype.run = function (completionCallback) {
 	this.board.display();
 	console.log("Turn is: " + this.currentPlayer.symbol)
 	
-	this.promptMove( function (row, col) {
+	this.promptMove(function (row, col) {
 		if (!that.makeMove(row, col)) {
 			console.log("Invalid Move!");
 		} else {
 			that.switchPlayer();
 		}
 		
-		if (that.board.won()) {
+		if (that.board.won() || that.board.gameOver()) {
 			return completionCallback();
 		}
 		
 		that.run(completionCallback);
 	})
-	
-	return completionCallback;
 	
 };
 
@@ -49,7 +47,7 @@ Game.prototype.promptMove = function (callback) {
 };
 
 Game.prototype.makeMove = function (row, col) {
-	if (!this.isInBounds (row, col)) {
+	if (!this.isInBounds(row, col)) {
 		return false;
 	} else {
 		if (this.board.grid[row][col] === null) {
@@ -63,9 +61,13 @@ Game.prototype.makeMove = function (row, col) {
 }; 
 
 Game.prototype.isInBounds = function (row, col) {
-	if ((0 <= row <= 2) && (0 <= col <= 2)) {
+	// console.log("I'm running");
+	if ((0 <= row) && (row <= 2) && (0 <= col) && (col <= 2)) {
+		// console.log(row);
+	// 	console.log(col);
 		return true;
 	} else {
+		// console.log("Stop!");
 		return false;
 	}
 };

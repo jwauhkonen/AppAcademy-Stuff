@@ -12,6 +12,11 @@ var game = new TTT.Game(reader);
 // game.board.display();
 
 game.run( function() {
-	console.log(game.board.winner + " wins!");
+	game.board.display();
+	if (game.board.winner === null) {
+		console.log("It's a draw!");
+	} else {
+		console.log(game.board.winner + " wins!");
+	}
 	reader.close();
 });
