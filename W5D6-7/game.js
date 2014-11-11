@@ -31,8 +31,44 @@ function update(mod) {
 function render() {
 	ctx.fillStyle = '#000';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(50, 60, 50, 250);
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(50, 110, 200, 50);
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(300, 10, 200, 50);
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(300, 60, 50, 250);
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(300, 260, 200, 50);
+	
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(550, 10, 200, 50);
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(550, 60, 50, 250);
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(550, 260, 200, 50);
+	
+	
 	ctx.fillStyle = mySprite.color;
 	ctx.fillRect(mySprite.x, mySprite.y, mySprite.width, mySprite.height);
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(50, 10, 200, 50);
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(200, 60, 50, 50);
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(450, 60, 50, 250);
+	
+	ctx.fillStyle = '#c0c';
+	ctx.fillRect(700, 60, 50, 250);
 }
 
 function run() {
