@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+div.thumbnails {
+  width: 400px;
+}
+
+.active > img {
+  width: 100%;
+}
+
+div.gutter {
+  position: relative;
+}
+
+.gutter-images {
+  width: 90%;
+  display: block;
+  float: left;
+  position: relative;
+  left: 5%;
+}
+
+.gutter-images > img {
+  width: 20%;
+  float: left;
+}
+
+.nav {
+  width: 5%;
+  display: block;
+  float: left;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.right {
+  left: 95%;
+}
+
+a {
+  font-size: 32px;
+  text-decoration: none;
+}
+
+.clearfix {
+  clear: both;
+}
+

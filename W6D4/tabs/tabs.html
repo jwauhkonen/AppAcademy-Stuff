@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./jquery-1.11.1.js"></script>
+    <script src="./tabs.js"></script>
+    <link href="./tabs.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.17.2/build/cssreset/cssreset-min.css">
+    <title>Corgi Tabs</title>
+  </head>
+
+  <body>
+    <ul class='tabs' data-content-tabs='#content-tabs'>
+      <li>
+        <a href='#Labrador' class="active">Labrador</a>
+      </li>
+      <li>
+        <a href='#Husky'>Husky</a>
+      </li>
+      <li>
+        <a href='#Beagle'>Beagle</a>
+      </li>
+    </ul>
+    <div id='content-tabs'>
+      <div class='tab-pane active' id="Labrador"><p>
+        The Labrador Retriever, also known as simply Labrador or Lab, is one of several kinds of retrievers, a type of gun dog.[3] Labradors are athletic, playful, and the most popular breed of dog by registered ownership in Australia, Canada, New Zealand,[4] the United Kingdom,[5] and the United States (since 1991).[6]
+
+        A favourite assistance dog breed in these and other countries, Labradors are frequently trained to aid people who are blind and people with autism, act as therapy dogs, and perform screening and detection work for law enforcement and other official agencies.[6] They are prized as sporting and waterfowl hunting dogs.[7] A few kennels breeding dogs were in England; at the same time a combination of sheep protection policy (Newfoundland) and rabies quarantine (England) led to their gradual demise in their country of origin.[8]
+      </p></div>
+      <div class='tab-pane' id="Husky"><p>
+        Husky is a general name for a type of dog used to pull sleds in northern regions, differentiated from other sled-dog types by their fast pulling style.[1] They are "an ever-changing cross-breed of the...fastest dogs".[2] The Alaskan Malamute, by contrast, is "the largest and most powerful" sled dog,[3] and was used for heavier loads. Huskies are used in sled dog racing. In recent years companies have been marketing tourist treks with dog sledges for adventure travelers in snow regions as well.[4] Huskies are also today kept as pets, and groups work to find new pet homes for retired racing and adventure trekking dogs.[5]
+      </p></div>
+      <div class='tab-pane' id="Beagle"><p>
+        The Beagle is a breed of small to medium-sized dog. A member of the hound group, it is similar in appearance to the foxhound, but smaller with shorter legs and longer, softer ears. Beagles are scent hounds, developed primarily for tracking hare, rabbit, deer, and other small game. They have a great sense of smell and tracking instinct that sees them employed as detection dogs for prohibited agricultural imports and foodstuffs in quarantine around the world. Beagles are intelligent but single-minded, and popular pets because of their size, even temper, and lack of inherited health problems.
+
+        Although beagle-type dogs have existed for 2,500 years, the modern breed was developed in Great Britain around the 1830s from several breeds, including the Talbot Hound, the North Country Beagle, the Southern Hound, and possibly the Harrier.
+
+        Beagles have been depicted in popular culture since Elizabethan times in literature and paintings, and more recently in film, television, and comic books. Snoopy of the comic strip Peanuts has been promoted as "the world's most famous beagle".
+      </p></div>
+    </div>
+    <script>
+      $(function () {
+        $('.tabs').tabs();
+      })
+    </script>
+  </body>
+</html>
