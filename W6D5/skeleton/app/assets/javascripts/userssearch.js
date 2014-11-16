@@ -1,14 +1,9 @@
 $.UsersSearch = function (el) {
   this.$el = $(el);
   this.input = "";
-  this.$ul = $("users-seach.users");
-  // this.listener();
+  this.$ul = this.$el.find(".users");
   this.$el.on("input", 'input', this.handleInput.bind(this));
 }
-
-// $.UsersSearch.prototype.listener = function () {
-//   return this.$el.on("keypress", this.handleInput(event));
-// }
 
 $.UsersSearch.prototype.handleInput = function (event) {
   var that = this;
@@ -28,9 +23,15 @@ $.UsersSearch.prototype.handleInput = function (event) {
 
 $.UsersSearch.prototype.renderResults = function(newData){
   var liString = "";
-  for(var i = 0; i < newData.length; i ++) {
+  for(var i = 0; i < newData.length; i++) {
     console.log(newData[i].username)
-    liString += "<li>" + newData[i].username + "</li>"
+    var currentUser = newData[i];
+	liString += "<li><a href=" + currentUser.id + ">" + currentUser.username + "</a></li>";
+	var button = "<button type='button' class='follow-toggle'></button>";
+	var $button = $(button);
+	$button.followToggle({userId: currentUser.id, followState: "unfollowed"})
+	liString += button;
+	// figure out how to get button to actually work as a follow toggle!!!!!
   }
   console.log(liString);
   this.$ul.html(liString);
