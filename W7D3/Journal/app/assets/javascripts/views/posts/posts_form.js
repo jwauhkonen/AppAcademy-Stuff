@@ -7,7 +7,7 @@ Journal.Views.PostsForm = Backbone.View.extend({
   },
   
   events: {
-    'click button': 'handleSubmit'
+    'click input[type=submit]': 'handleSubmit'
   },
   
   render: function () {
@@ -20,6 +20,8 @@ Journal.Views.PostsForm = Backbone.View.extend({
     // var id = $(event.currentTarget).data("id");
     debugger
     var postAttrs = $('#post-edit-form').serializeJSON();
+	this.model.save(postAttrs, {patch: true});
+	Backbone.history.navigate("", {trigger: true})
       
     //something something JQuery serialize
     //maybe install it!!!!!
